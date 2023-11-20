@@ -1,0 +1,38 @@
+import re
+
+class VerbFiniteStateMachine:
+    def __init__(self):
+        self.transitions = [
+            ('Base', r'\bwalk\b', 'Past', 'walked'),
+            ('Base', r'\bjump\b', 'Past', 'jumped'),
+            # Add more transitions for other verbs as needed
+        ]
+        self.current_state = 'Base'
+
+    def process_sentence(self, sentence):
+        words = sentence.split()
+        new_sentence = []
+        
+        for word in words:
+            for transition in self.transitions:
+                current_state, trigger, next_state, replacement = transition
+                if self.current_state == current_state and re.fullmatch(trigger, word):
+                    new_sentence.append(replacement)
+                    self.current_state = next_state
+                    break
+            else:
+                new_sentence.append(word)
+
+        return ' '.join(new_sentence)
+if __name__ == "__main__":
+    fsm = VerbFiniteStateMachine()
+
+    sentence1 = "She walked to the park yesterday"
+    result1 = fsm.process_sentence(sentence1)
+    print(f"Original: {sentence1}")
+    print(f"Transformed: {result1}")
+    
+    sentence2 = "He jumped over the fence"
+    result2 = fsm.process_sentence(sentence2)
+    print(f"\nOriginal: {sentence2}")
+    print(f"Transformed: {result2}")
