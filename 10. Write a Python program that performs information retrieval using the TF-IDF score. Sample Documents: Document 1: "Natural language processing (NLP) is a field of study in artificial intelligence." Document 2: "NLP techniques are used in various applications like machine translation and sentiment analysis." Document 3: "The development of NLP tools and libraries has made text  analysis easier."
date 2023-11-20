@@ -1,0 +1,37 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+documents = [
+    "Natural language processing (NLP) is a field of study in artificial intelligence.",
+    "NLP techniques are used in various applications like machine translation and sentiment analysis.",
+    "The development of NLP tools and libraries has made text analysis easier."
+]
+
+def tfidf_representation(documents):
+
+    vectorizer = TfidfVectorizer()
+
+    tfidf_matrix = vectorizer.fit_transform(documents)
+
+    feature_names = vectorizer.get_feature_names_out()
+
+    tfidf_scores = {}
+
+    for i, document in enumerate(documents):
+        scores = {}
+        for j, feature in enumerate(feature_names):
+            score = tfidf_matrix[i, j]
+            if score > 0:
+                scores[feature] = score
+        tfidf_scores[f"Document {i + 1}"] = scores
+
+    return tfidf_scores
+
+def main():
+    tfidf_scores = tfidf_representation(documents)
+
+    for doc, scores in tfidf_scores.items():
+        print(f"\nTF-IDF scores for {doc}:")
+        for word, score in scores.items():
+            print(f"{word}: {score:.4f}")
+
+if __name__ == "__main__":
+    main()
