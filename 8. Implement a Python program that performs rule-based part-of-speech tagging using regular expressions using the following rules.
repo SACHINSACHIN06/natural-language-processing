@@ -1,0 +1,28 @@
+import nltk
+patterns = [
+    (r'\b(?:The|the)\b', 'DET'),      # Matches 'The' or 'the' as determiners
+    (r'\b(?:cat|dog)\b', 'NOUN'),     # Matches 'cat' or 'dog' as nouns
+    (r'\b(?:is|am|are)\b', 'VERB'),   # Matches 'is,' 'am,' or 'are' as verbs
+    (r'\b(?:quickly|brightly)\b', 'ADV'),  # Matches 'quickly' or 'brightly' as adverbs
+    (r'\b(?:[A-Za-z]+)\b', 'NOUN')   # Matches any other words as nouns
+]
+
+def rule_based_pos_tagging(text, patterns):
+
+    tagger = nltk.RegexpTagger(patterns)
+
+    words = nltk.word_tokenize(text)
+    pos_tags = tagger.tag(words)
+
+    return pos_tags
+
+def main():
+
+    text = "The quick brown fox is jumping over the lazy dog."
+
+    pos_tags = rule_based_pos_tagging(text, patterns)
+    print("Rule-based Part-of-speech tagging for '{}':".format(text))
+    print(pos_tags)
+
+if __name__ == "__main__":
+    main()
