@@ -1,0 +1,37 @@
+import nltk
+from nltk import PCFG
+from nltk import parse
+
+pcfg_grammar = PCFG.fromstring("""
+    S -> NP VP [0.6]
+    NP -> Det N [0.3] | NP PP [0.2]
+    VP -> V NP [0.5] | VP PP [0.4]
+    PP -> P NP [0.7]
+    Det -> 'The' [1.0]
+    N -> 'cat' [0.5] | 'mouse' [0.5]
+    V -> 'chased' [1.0]
+    P -> 'the' [1.0]
+""")
+
+parser = parse.ChartParser(pcfg_grammar)
+
+def parse_sentence(sentence):
+    words = sentence.split()
+    chart = parser.chart_parse(words)
+
+    parse_tree = list(chart.parses(pcfg_grammar.start()))[0]
+
+    return parse_tree
+
+def main():
+
+    sentence = "The cat chased the mouse"
+
+    parse_tree = parse_sentence(sentence)
+
+    print("Original Sentence: {}".format(sentence))
+    print("Parse Tree:")
+    parse_tree.pretty_print()
+
+if __name__ == "__main__":
+    main()
