@@ -1,10 +1,10 @@
 import nltk
 patterns = [
-    (r'\b(?:The|the)\b', 'DET'),      # Matches 'The' or 'the' as determiners
-    (r'\b(?:cat|dog)\b', 'NOUN'),     # Matches 'cat' or 'dog' as nouns
-    (r'\b(?:is|am|are)\b', 'VERB'),   # Matches 'is,' 'am,' or 'are' as verbs
-    (r'\b(?:quickly|brightly)\b', 'ADV'),  # Matches 'quickly' or 'brightly' as adverbs
-    (r'\b(?:[A-Za-z]+)\b', 'NOUN')   # Matches any other words as nouns
+    (r'\b(?:The|the)\b', 'DET'),     
+    (r'\b(?:cat|dog)\b', 'NOUN'),    
+    (r'\b(?:is|am|are)\b', 'VERB'),
+    (r'\b(?:quickly|brightly)\b', 'ADV'),  
+    (r'\b(?:[A-Za-z]+)\b', 'NOUN')   
 ]
 
 def rule_based_pos_tagging(text, patterns):
