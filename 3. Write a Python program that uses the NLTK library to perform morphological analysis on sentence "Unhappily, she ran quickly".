@@ -1,0 +1,31 @@
+import nltk
+from nltk import word_tokenize, pos_tag
+
+def morphological_analysis(sentence):
+    # Download NLTK data if not already present
+    nltk.download('punkt')
+    nltk.download('averaged_perceptron_tagger')
+
+    # Tokenize the sentence
+    tokens = word_tokenize(sentence)
+
+    # Perform part-of-speech tagging
+    pos_tags = pos_tag(tokens)
+
+    return pos_tags
+
+def main():
+    # Example sentence
+    input_sentence = "Unhappily, she ran quickly"
+
+    # Perform morphological analysis
+    analysis_result = morphological_analysis(input_sentence)
+
+    # Display the result
+    print("Original Sentence:", input_sentence)
+    print("Morphological Analysis:")
+    for word, pos in analysis_result:
+        print(f"{word}: {pos}")
+
+if _name_ == "_main_":
+    main()
