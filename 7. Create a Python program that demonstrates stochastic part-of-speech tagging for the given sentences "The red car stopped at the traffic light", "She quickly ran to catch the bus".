@@ -1,0 +1,51 @@
+import nltk
+from nltk.tag import BrillTagger
+from nltk.tag.brill import BrillTaggerTrainer
+from nltk.tokenize import word_tokenize
+
+# Download NLTK data (if not already downloaded)
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+
+# Training data for the BrillTaggerTrainer
+train_data = [
+    [('The', 'DT'), ('red', 'JJ'), ('car', 'NN'), ('stopped', 'VBD'), ('at', 'IN'), ('the', 'DT'), ('traffic', 'NN'), ('light', 'NN')],
+    [('She', 'PRP'), ('quickly', 'RB'), ('ran', 'VBD'), ('to', 'TO'), ('catch', 'VB'), ('the', 'DT'), ('bus', 'NN')],
+]
+
+def train_brill_tagger(train_data):
+    # Train the BrillTaggerTrainer
+    trainer = BrillTaggerTrainer(nltk.DefaultTagger('NN'))
+    tagger = trainer.train(train_data)
+    return tagger
+
+def pos_tagging_stochastic(text, tagger):
+    # Tokenize the text into words
+    words = word_tokenize(text)
+
+    # Perform part-of-speech tagging using the trained BrillTagger
+    pos_tags = tagger.tag(words)
+
+    return pos_tags
+
+def main():
+    # Example texts
+    text1 = "The red car stopped at the traffic light."
+    text2 = "She quickly ran to catch the bus."
+
+    # Train the BrillTaggerTrainer with the provided training data
+    tagger = train_brill_tagger(train_data)
+
+    # Perform stochastic part-of-speech tagging on each text
+    pos_tags1 = pos_tagging_stochastic(text1, tagger)
+    pos_tags2 = pos_tagging_stochastic(text2, tagger)
+
+    # Display the results
+    print("Stochastic Part-of-speech tagging for '{}'".format(text1))
+    print(pos_tags1)
+
+    print("\nStochastic Part-of-speech tagging for '{}'".format(text2))
+    print(pos_tags2)
+
+if __name__ == "__main__":
+    main()
