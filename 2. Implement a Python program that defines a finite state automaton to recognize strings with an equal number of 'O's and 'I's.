@@ -1,0 +1,32 @@
+def is_equal_oi(input_string):
+    states = {'q0', 'q1', 'q2'}
+
+    transitions = {
+        'q0': {'O': 'q1', 'I': 'q2'},
+        'q1': {'O': 'q0', 'I': 'q2'},
+        'q2': {'O': 'q2', 'I': 'q1'}
+    }
+
+    current_state = 'q0'
+
+    for char in input_string:
+    
+        if char not in {'O', 'I'}:
+            print(f"Invalid input symbol: {char}")
+            return False
+
+     
+        current_state = transitions[current_state][char]
+
+
+    return current_state == 'q0'
+
+def main():
+    test_strings = ["OOII", "OIIO", "OOOIIII", "OOIIO"]
+
+    for test_str in test_strings:
+        result = is_equal_oi(test_str)
+        print(f"{test_str}: {'Accepted' if result else 'Rejected'}")
+
+if _name_ == "_main_":
+    main()
