@@ -1,0 +1,42 @@
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+spam_messages = [
+    "Win a free iPhone!",
+    "Get rich quick!",
+    "Congratulations, you've won a lottery!",
+    "Limited-time offer, 50% off on all products."
+]
+
+non_spam_messages = [
+    "Meeting at 2 PM tomorrow.",
+    "Please find the attached document.",
+    "Can you review the report by EOD?",
+    "Reminder: Team lunch at noon."
+]
+
+labels = [0] * len(non_spam_messages) + [1] * len(spam_messages)
+
+all_messages = non_spam_messages + spam_messages
+
+X_train, X_test, y_train, y_test = train_test_split(all_messages, labels, test_size=0.2, random_state=42)
+
+vectorizer = CountVectorizer()
+X_train_vectorized = vectorizer.fit_transform(X_train)
+X_test_vectorized = vectorizer.transform(X_test)
+
+classifier = MultinomialNB()
+classifier.fit(X_train_vectorized, y_train)
+
+predictions = classifier.predict(X_test_vectorized)
+
+accuracy = accuracy_score(y_test, predictions)
+conf_matrix = confusion_matrix(y_test, predictions)
+classification_rep = classification_report(y_test, predictions)
+
+print("Accuracy:", accuracy)
+print("\nConfusion Matrix:")
+print(conf_matrix)
+print("\nClassification Report:")
+print(classification_rep)
