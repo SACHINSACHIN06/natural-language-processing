@@ -1,0 +1,27 @@
+from textblob import TextBlob
+
+def sentiment_analysis(text):
+    blob = TextBlob(text)
+
+    polarity = blob.sentiment.polarity
+
+    if polarity > 0:
+        return "Positive"
+    elif polarity < 0:
+        return "Negative"
+    else:
+        return "Neutral"
+
+def main():
+   
+    sentence1 = "I love this product! It's amazing."
+    sentence2 = "The weather is terrible today."
+
+    sentiment1 = sentiment_analysis(sentence1)
+    sentiment2 = sentiment_analysis(sentence2)
+
+    print("Sentiment for '{}' : {}".format(sentence1, sentiment1))
+    print("Sentiment for '{}' : {}".format(sentence2, sentiment2))
+
+if __name__ == "__main__":
+    main()
