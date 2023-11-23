@@ -1,0 +1,37 @@
+import nltk
+from nltk.corpus import wordnet
+
+
+nltk.download('wordnet')
+
+
+sentences = [
+    "The cat sat on the mat.",
+    "The dog barked loudly.",
+    "She played the piano beautifully."
+]
+
+
+def explore_word_meanings(sentence):
+    print("\nSentence:", sentence)
+    tokens = nltk.word_tokenize(sentence)
+
+    for token in tokens:
+        synsets = wordnet.synsets(token)
+        
+        if synsets:
+            print(f"\nWord: {token}")
+            
+            # Display meanings, relationships, and synonyms
+            for synset in synsets:
+                print(f"\nMeaning: {synset.definition()}")
+                print(f"Part of Speech: {synset.pos()}")
+                print(f"Synonyms: {', '.join(synset.lemma_names())}")
+                print(f"Hypernyms (more abstract terms): {', '.join(hypernym.name().split('.')[0] for hypernym in synset.hypernyms())}")
+                print(f"Hyponyms (more specific terms): {', '.join(hyponym.name().split('.')[0] for hyponym in synset.hyponyms())}")
+        else:
+            print(f"\nNo information found for the word: {token}")
+
+
+for sentence in sentences:
+    explore_word_meanings(sentence)
