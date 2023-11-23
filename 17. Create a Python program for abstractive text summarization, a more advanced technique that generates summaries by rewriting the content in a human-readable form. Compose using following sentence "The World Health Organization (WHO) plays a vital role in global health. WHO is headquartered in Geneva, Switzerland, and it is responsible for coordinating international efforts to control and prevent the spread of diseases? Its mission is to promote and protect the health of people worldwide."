@@ -1,0 +1,18 @@
+from transformers import pipeline
+
+input_text = (
+    "The World Health Organization (WHO) plays a vital role in global health. "
+    "WHO is headquartered in Geneva, Switzerland, and it is responsible for coordinating "
+    "international efforts to control and prevent the spread of diseases. Its mission is "
+    "to promote and protect the health of people worldwide."
+)
+
+summarizer = pipeline("summarization")
+
+summary = summarizer(input_text, max_length=150, min_length=50, length_penalty=2.0, num_beams=4, temperature=0.6)
+
+print("\nOriginal Text:")
+print(input_text)
+
+print("\nGenerated Summary:")
+print(summary[0]['summary_text'])
