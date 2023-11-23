@@ -1,0 +1,33 @@
+import spacy
+
+
+nlp = spacy.load("en_core_web_sm")
+
+
+conversation = [
+    "Hello! How are you today?",
+    "I'm doing well, thank you. How about you?",
+    "Can you please pass the salt?",
+    "Sure, here you go."
+]
+
+
+def recognize_dialog_acts(utterance):
+    doc = nlp(utterance)
+
+
+    if any(token.text.lower() in ['hello', 'hi'] for token in doc):
+        return "Greeting"
+    elif doc[0].text.lower() in ["i'm", 'i', 'im', 'i am']:
+        return "Self Introduction"
+    elif doc[0].lemma_ == 'can' and doc[1].lemma_ == 'you':
+        return "Request"
+    elif doc[0].lemma_ == 'sure':
+        return "Agreement"
+    else:
+        return "Other"
+
+
+for utterance in conversation:
+    dialog_act = recognize_dialog_acts(utterance)
+    print(f"Utterance: '{utterance}' - Dialog Act: {dialog_act}")
