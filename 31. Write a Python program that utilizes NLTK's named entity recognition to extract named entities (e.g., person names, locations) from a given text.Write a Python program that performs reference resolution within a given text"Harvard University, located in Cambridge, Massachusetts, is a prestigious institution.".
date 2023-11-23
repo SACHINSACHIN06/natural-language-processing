@@ -1,0 +1,28 @@
+import nltk
+
+
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
+
+
+def resolve_references(text):
+    sentences = nltk.sent_tokenize(text)
+    for sentence in sentences:
+        words = nltk.word_tokenize(sentence)
+        tags = nltk.pos_tag(words)
+        chunks = nltk.ne_chunk(tags)
+        
+        for chunk in chunks:
+            if isinstance(chunk, nltk.Tree):
+                if chunk.label() == 'GPE':
+                    print(f"Location: {' '.join(c[0] for c in chunk)}")
+                elif chunk.label() == 'PERSON':
+                    print(f"Person: {' '.join(c[0] for c in chunk)}")
+
+
+text = "Harvard University, located in Cambridge, Massachusetts, is a prestigious institution."
+
+
+resolve_references(text)
