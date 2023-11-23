@@ -1,0 +1,22 @@
+import re
+
+def parse_fopc(expression):
+
+    expression = re.sub(r'\band\b', '&', expression)
+    expression = re.sub(r'\bor\b', '|', expression)
+    expression = re.sub(r'\bnot\b', '~', expression)
+
+    try:
+        result = eval(expression, {'__builtins__': None}, {})
+        print(f"Expression: {expression}")
+        print(f"Result: {result}")
+    except Exception as e:
+        print(f"Error parsing expression: {expression}")
+        print(f"Error message: {e}")
+
+
+expressions = ["x and y", "x or (not y)", "x and (y or (not x))"]
+
+
+for expr in expressions:
+    parse_fopc(expr)
