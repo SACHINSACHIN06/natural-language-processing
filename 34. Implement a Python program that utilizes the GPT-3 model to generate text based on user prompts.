@@ -1,0 +1,17 @@
+import openai
+
+# Set your API key
+openai.api_key = 'YOUR_API_KEY'
+
+# Your prompt
+user_prompt = "Translate the following English text to French:"
+
+# Generate text using GPT-3
+response = openai.Completion.create(
+    engine="text-davinci-002",  # You may use a different engine
+    prompt=user_prompt,
+    max_tokens=150  # Adjust based on your needs
+)
+
+# Display the generated text
+print(response['choices'][0]['text'])
