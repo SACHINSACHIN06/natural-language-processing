@@ -1,0 +1,27 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+
+sentences = [
+    "Artificial intelligence (AI) is a field of computer science.",
+    "Machine learning is a subset of AI that focuses on training models to make predictions.",
+    "Deep learning is a type of machine learning that uses neural networks with multiple layers.",
+    "Neural networks are composed of interconnected nodes called neurons.",
+    "Recurrent neural networks (RNNs) are commonly used in natural language processing tasks."
+]
+
+
+vectorizer = TfidfVectorizer()
+
+
+tfidf_matrix = vectorizer.fit_transform(sentences)
+
+
+feature_names = vectorizer.get_feature_names_out()
+
+
+for i, sentence in enumerate(sentences):
+    print(f"\nKey Phrases for Sentence {i + 1}: {sentence}")
+    feature_index = tfidf_matrix[i, :].nonzero()[1]
+    tfidf_scores = zip(feature_index, [tfidf_matrix[i, x] for x in feature_index])
+    for feature, score in sorted(tfidf_scores, key=lambda x: x[1], reverse=True):
+        print(f"{feature_names[feature]}: {score:.4f}")
