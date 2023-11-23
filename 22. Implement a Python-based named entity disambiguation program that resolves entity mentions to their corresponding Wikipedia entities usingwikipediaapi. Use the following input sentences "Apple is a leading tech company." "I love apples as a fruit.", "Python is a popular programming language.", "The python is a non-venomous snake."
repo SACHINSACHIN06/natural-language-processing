@@ -1,0 +1,34 @@
+import wikipediaapi
+import spacy
+
+
+nlp = spacy.load("en_core_web_sm")
+
+
+wiki_wiki = wikipediaapi.Wikipedia('en')
+
+
+sentences = [
+    "Apple is a leading tech company.",
+    "I love apples as a fruit.",
+    "Python is a popular programming language.",
+    "The python is a non-venomous snake."
+]
+
+
+for sentence in sentences:
+    print("\nOriginal Sentence:", sentence)
+
+
+    doc = nlp(sentence)
+    entities = [ent.text for ent in doc.ents]
+
+
+    for entity in entities:
+        page_py = wiki_wiki.page(entity)
+        if page_py.exists():
+            print(f"\nNamed Entity: {entity}")
+            print(f"Corresponding Wikipedia Entity: {page_py.fullurl}")
+        else:
+            print(f"\nNamed Entity: {entity}")
+            print("No corresponding Wikipedia entity found.")
