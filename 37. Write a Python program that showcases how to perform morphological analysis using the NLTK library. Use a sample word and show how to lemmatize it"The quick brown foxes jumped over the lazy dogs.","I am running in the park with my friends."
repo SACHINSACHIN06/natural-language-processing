@@ -1,0 +1,28 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+
+
+nltk.download('punkt')
+nltk.download('wordnet')
+
+
+sentences = [
+    "The quick brown foxes jumped over the lazy dogs.",
+    "I am running in the park with my friends."
+]
+
+
+lemmatizer = WordNetLemmatizer()
+
+
+def perform_lemmatization(sentence):
+    words = word_tokenize(sentence)
+    lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
+    return lemmatized_words
+
+
+for sentence in sentences:
+    lemmatized_words = perform_lemmatization(sentence)
+    print(f"\nOriginal Sentence: {sentence}")
+    print(f"Lemmatized Words: {' '.join(lemmatized_words)}")
