@@ -1,0 +1,14 @@
+import re
+
+def date_fsm(input_string):
+    date_pattern = re.compile(r'^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$')
+
+    if date_pattern.match(input_string):
+        return "Valid date format"
+    else:
+        return "Invalid date format"
+
+
+input_date = input("Enter a date (DD/MM/YYYY): ")
+result = date_fsm(input_date)
+print(result)
