@@ -1,0 +1,13 @@
+from transformers import pipeline
+
+
+translator = pipeline("translation", model="Helsinki-NLP/opus-mt-en-de")
+
+
+english_text = "Hello, how are 
+
+german_translation = translator(english_text, max_length=50)[0]['translation_text']
+
+
+print(f"English: {english_text}")
+print(f"German: {german_translation}")
