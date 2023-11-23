@@ -1,0 +1,33 @@
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.probability import FreqDist
+
+nltk.download('punkt')
+nltk.download('stopwords')
+
+def extractive_summarization(document):
+
+    sentences = sent_tokenize(document)
+
+
+    stop_words = set(stopwords.words('english'))
+    word_tokens = [word for word in word_tokenize(document.lower()) if word.isalnum() and word not in stop_words]
+
+  
+    word_freq = FreqDist(word_tokens)
+    sentence_scores = {sentence: sum(word_freq[word] for word in word_tokenize(sentence.lower()) if word.isalnum()) for sentence in sentences}
+
+
+    summary_sentences = sorted(sentence_scores, key=sentence_scores.get, reverse=True)[:3]  # Adjust the number of sentences in the summary as needed
+
+
+    summary = ' '.join(summary_sentences)
+    return summary
+
+
+document = '''Your long text here'''
+
+
+summary = extractive_summarization(document)
+print(summary)
