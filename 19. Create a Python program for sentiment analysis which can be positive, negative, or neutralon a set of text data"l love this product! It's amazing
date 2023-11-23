@@ -4,10 +4,10 @@ def analyze_sentiment(text):
     # Create a TextBlob object
     blob = TextBlob(text)
     
-    # Get sentiment polarity
+
     sentiment_polarity = blob.sentiment.polarity
 
-    # Classify sentiment
+
     if sentiment_polarity > 0:
         sentiment = "Positive"
     elif sentiment_polarity < 0:
@@ -17,7 +17,7 @@ def analyze_sentiment(text):
 
     return sentiment, sentiment_polarity
 
-# Set of text data
+
 texts = [
     "I love this product! It's amazing.",
     "The service was terrible; I'm very disappointed.",
@@ -25,7 +25,7 @@ texts = [
     "The quality of the product exceeded my expectations!"
 ]
 
-# Analyze sentiment for each text
+
 for i, text in enumerate(texts, start=1):
     sentiment, sentiment_polarity = analyze_sentiment(text)
     print(f"\nText {i}: {text}")
