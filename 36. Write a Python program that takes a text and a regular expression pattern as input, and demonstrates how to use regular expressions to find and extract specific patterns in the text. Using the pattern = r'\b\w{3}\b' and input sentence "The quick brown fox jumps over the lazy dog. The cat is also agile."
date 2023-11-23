@@ -1,0 +1,19 @@
+import re
+
+def extract_pattern(text, pattern):
+    # Find all matches using the given pattern
+    matches = re.findall(pattern, text)
+
+
+    print(f"Text: {text}")
+    print(f"Pattern: {pattern}")
+    print(f"Matches: {matches}")
+
+
+sentence = "The quick brown fox jumps over the lazy dog. The cat is also agile."
+
+
+pattern = r'\b\w{3}\b'
+
+
+extract_pattern(sentence, pattern)
