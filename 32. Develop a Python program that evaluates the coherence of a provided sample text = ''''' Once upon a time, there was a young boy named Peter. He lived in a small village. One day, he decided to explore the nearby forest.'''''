@@ -1,0 +1,23 @@
+import nltk
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+sample_text = '''
+Once upon a time, there was a young boy named Peter.
+He lived in a small village.
+One day, he decided to explore the nearby forest.
+'''
+
+
+sentences = nltk.sent_tokenize(sample_text)
+
+
+vectorizer = CountVectorizer().fit_transform(sentences)
+
+
+cosine_similarities = cosine_similarity(vectorizer, vectorizer)
+
+
+print("Coherence Scores:")
+for i in range(len(sentences)):
+    print(f"Sentence {i + 1}: {cosine_similarities[i].mean():.4f}")
