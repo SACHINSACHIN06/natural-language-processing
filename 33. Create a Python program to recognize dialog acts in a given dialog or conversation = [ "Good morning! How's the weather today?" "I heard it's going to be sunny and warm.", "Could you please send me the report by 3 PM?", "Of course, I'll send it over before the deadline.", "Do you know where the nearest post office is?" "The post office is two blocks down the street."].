@@ -1,0 +1,37 @@
+import spacy
+
+
+nlp = spacy.load("en_core_web_sm")
+
+
+conversation = [
+    "Good morning! How's the weather today?",
+    "I heard it's going to be sunny and warm.",
+    "Could you please send me the report by 3 PM?",
+    "Of course, I'll send it over before the deadline.",
+    "Do you know where the nearest post office is?",
+    "The post office is two blocks down the street."
+]
+
+
+def recognize_dialog_acts(utterance):
+    doc = nlp(utterance)
+
+
+    if any(token.text.lower() in ['hello', 'hi', 'good', 'morning', 'afternoon', 'evening'] for token in doc):
+        return "Greeting"
+    elif 'weather' in [token.text.lower() for token in doc]:
+        return "Weather Inquiry"
+    elif 'send' in [token.text.lower() for token in doc] and 'report' in [token.text.lower() for token in doc]:
+        return "Request for Report"
+    elif 'send' in [token.text.lower() for token in doc] and 'deadline' in [token.text.lower() for token in doc]:
+        return "Acknowledgment"
+    elif 'where' in [token.text.lower() for token in doc] and 'post office' in [token.text.lower() for token in doc]:
+        return "Location Inquiry"
+    else:
+        return "Other"
+
+
+for utterance in conversation:
+    dialog_act = recognize_dialog_acts(utterance)
+    print(f"Utterance: '{utterance}' - Dialog Act: {dialog_act}")
