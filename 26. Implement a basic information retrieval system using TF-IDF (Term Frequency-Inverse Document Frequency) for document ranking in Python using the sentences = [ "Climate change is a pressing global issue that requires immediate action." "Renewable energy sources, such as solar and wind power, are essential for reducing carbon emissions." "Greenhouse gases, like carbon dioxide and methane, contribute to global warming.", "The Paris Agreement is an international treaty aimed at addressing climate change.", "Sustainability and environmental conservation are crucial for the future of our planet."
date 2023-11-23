@@ -1,0 +1,33 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+
+documents = [
+    "Climate change is a pressing global issue that requires immediate action.",
+    "Renewable energy sources, such as solar and wind power, are essential for reducing carbon emissions.",
+    "Greenhouse gases, like carbon dioxide and methane, contribute to global warming.",
+    "The Paris Agreement is an international treaty aimed at addressing climate change.",
+    "Sustainability and environmental conservation are crucial for the future of our planet."
+]
+
+
+query = "Climate action and renewable energy"
+
+
+all_documents = [query] + documents
+
+
+vectorizer = TfidfVectorizer(stop_words='english')
+tfidf_matrix = vectorizer.fit_transform(all_documents)
+
+
+cosine_similarities = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1:])
+
+
+ranking = sorted(enumerate(cosine_similarities[0]), key=lambda x: x[1], reverse=True)
+
+
+print("Ranked Documents:")
+for index, score in ranking:
+    print(f"Document {index + 1}: Similarity Score = {score:.4f}")
+    print(f"Content: {documents[index]}\n")
