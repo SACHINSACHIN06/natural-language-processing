@@ -1,0 +1,32 @@
+import nltk
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+
+
+nltk.download('punkt')
+
+
+sentences = [
+    "Coding with Python is very enjoyable.",
+    "I had a delicious meal at the restaurant."
+]
+
+
+porter_stemmer = PorterStemmer()
+
+
+def perform_stemming(words):
+    stemmed_words = [porter_stemmer.stem(word) for word in words]
+    return stemmed_words
+
+
+for sentence in sentences:
+
+    words = word_tokenize(sentence)
+    
+
+    stemmed_words = perform_stemming(words)
+    
+
+    print("\nOriginal Sentence:", sentence)
+    print("Stemmed Words:", ' '.join(stemmed_words))
