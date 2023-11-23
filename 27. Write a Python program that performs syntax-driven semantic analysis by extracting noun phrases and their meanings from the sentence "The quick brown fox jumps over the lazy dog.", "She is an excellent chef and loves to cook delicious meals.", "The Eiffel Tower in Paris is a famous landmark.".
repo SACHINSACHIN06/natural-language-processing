@@ -1,0 +1,36 @@
+import spacy
+
+
+nlp = spacy.load("en_core_web_sm")
+
+
+sentences = [
+    "The quick brown fox jumps over the lazy dog.",
+    "She is an excellent chef and loves to cook delicious meals.",
+    "The Eiffel Tower in Paris is a famous landmark."
+]
+
+
+def extract_noun_phrases(sentence):
+    print("\nSentence:", sentence)
+    
+
+    doc = nlp(sentence)
+
+
+    for chunk in doc.noun_chunks:
+        print(f"\nNoun Phrase: {chunk.text}")
+        
+
+        for token in chunk:
+            synsets = token._.wordnet.wordnet_synsets()
+            if synsets:
+                print(f"  Word: {token.text}")
+                for synset in synsets:
+                    print(f"    Meaning: {synset.definition()}")
+            else:
+                print(f"  Word: {token.text} (No WordNet information)")
+
+
+for sentence in sentences:
+    extract_noun_phrases(sentence)
